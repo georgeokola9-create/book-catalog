@@ -1,0 +1,20 @@
+# Java / Spring Boot
+backend/target/
+backend/.mvn/
+*.class
+
+# Flutter
+app/.dart_tool/
+app/.flutter-plugin-dependencies
+app/build/
+
+# Environment / secrets — NEVER commit these
+.env
+application-secrets.yml
+*.jks
+*.keystore
+
+# IDE
+.idea/
+.vscode/
+*.iml
