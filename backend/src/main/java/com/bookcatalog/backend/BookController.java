@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -18,9 +19,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class BookController {
 
     private final BookRepository bookRepository;
+    private final GoogleBooksService googleBooksService;
 
-    public BookController(BookRepository bookRepository) {
+    public BookController(BookRepository bookRepository, GoogleBooksService googleBooksService) {
         this.bookRepository = bookRepository;
+        this.googleBooksService = googleBooksService;
     }
 
     @GetMapping
@@ -40,6 +43,22 @@ public class BookController {
         if (bookRepository.existsByIsbn(book.getIsbn())) {
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }
+        Book saved = bookRepository.save(book);
+        return ResponseEntity.status(HttpStatus.CREATED).body(saved);
+    }
+
+    @PostMapping("/scan")
+    public ResponseEntity<Book> scanBook(@RequestParam String isbn) {
+        var existing = bookRepository.findByIsbn(isbn);
+        if (existing.isPresent()) {
+            return ResponseEntity.ok(existing.get());
+        }
+
+        Book book = googleBooksService.lookupByIsbn(isbn);
+        if (book == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+
         Book saved = bookRepository.save(book);
         return ResponseEntity.status(HttpStatus.CREATED).body(saved);
     }
