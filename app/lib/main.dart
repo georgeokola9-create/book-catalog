@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'scan_screen.dart';
+
+import 'catalog_screen.dart';
 
 void main() {
   runApp(const BookCatalogApp());
@@ -16,7 +17,7 @@ class BookCatalogApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const ScanScreen(),
+      home: const CatalogScreen(),
     );
   }
 }
