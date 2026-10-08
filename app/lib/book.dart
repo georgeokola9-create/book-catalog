@@ -1,5 +1,5 @@
 class Book {
-  final int id;
+  final int? id; // null for recommendations that are not in the library yet
   final String isbn;
   final String title;
   final String author;
@@ -21,19 +21,21 @@ class Book {
     this.tags = const [],
   });
 
+  bool get isOwned => id != null;
+
   factory Book.fromJson(Map<String, dynamic> json) {
     return Book(
-      id: json['id'] as int,
-      isbn: json['isbn'] as String,
-      title: json['title'] as String,
+      id: (json['id'] as num?)?.toInt(),
+      isbn: json['isbn'] as String? ?? '',
+      title: json['title'] as String? ?? 'Untitled',
       author: json['author'] as String? ?? 'Unknown Author',
       genre: json['genre'] as String?,
       description: json['description'] as String?,
-      rating: json['rating'] as int?,
+      rating: (json['rating'] as num?)?.toInt(),
       status: json['status'] as String?,
       tags:
-          (json['tags'] as List<dynamic>?)?.map((e) => e as String).toList() ??
-          [],
+          (json['tags'] as List<dynamic>?)?.map((e) => e.toString()).toList() ??
+              const [],
     );
   }
 }
