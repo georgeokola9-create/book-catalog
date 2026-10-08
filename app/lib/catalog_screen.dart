@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 import 'book.dart';
+import 'book_detail_screen.dart';
 import 'scan_screen.dart';
 
 class CatalogScreen extends StatefulWidget {
@@ -124,6 +125,17 @@ class _CatalogScreenState extends State<CatalogScreen> {
                           ],
                         )
                       : null,
+                  onTap: () async {
+                    await Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => BookDetailScreen(book: book),
+                      ),
+                    );
+                    if (mounted) {
+                      _refresh();
+                    }
+                  },
                 );
               },
             ),
