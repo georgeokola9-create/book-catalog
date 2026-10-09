@@ -1,47 +1,40 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 
+import 'api_service.dart';
 import 'book.dart';
 import 'book_detail_screen.dart';
-import 'scan_screen.dart';
+import 'widgets.dart';
 
 class CatalogScreen extends StatefulWidget {
-  const CatalogScreen({super.key});
+  final int refreshToken;
+
+  const CatalogScreen({super.key, this.refreshToken = 0});
 
   @override
   State<CatalogScreen> createState() => _CatalogScreenState();
 }
 
 class _CatalogScreenState extends State<CatalogScreen> {
-  static const String baseUrl = 'http://localhost:8080';
-
+  final ApiService _apiService = const ApiService();
   late Future<List<Book>> _booksFuture;
 
   @override
   void initState() {
     super.initState();
-    _booksFuture = _fetchBooks();
+    _booksFuture = _apiService.fetchBooks();
   }
 
-  Future<List<Book>> _fetchBooks() async {
-    final response = await http.get(Uri.parse('$baseUrl/books'));
-    if (response.statusCode != 200) {
-      throw Exception('Failed to load books (status ${response.statusCode})');
+  @override
+  void didUpdateWidget(covariant CatalogScreen oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.refreshToken != oldWidget.refreshToken) {
+      _refresh();
     }
-
-    final data = jsonDecode(response.body) as List<dynamic>;
-    return data
-        .map((json) => Book.fromJson(json as Map<String, dynamic>))
-        .toList();
   }
 
   Future<void> _refresh() async {
-    final booksFuture = _fetchBooks();
-    setState(() {
-      _booksFuture = booksFuture;
-    });
+    final booksFuture = _apiService.fetchBooks();
+    setState(() => _booksFuture = booksFuture);
     await booksFuture;
   }
 
@@ -57,103 +50,72 @@ class _CatalogScreenState extends State<CatalogScreen> {
           }
 
           if (snapshot.hasError) {
-            return Center(
-              child: Padding(
-                padding: const EdgeInsets.all(24),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Icon(
-                      Icons.error_outline,
-                      size: 48,
-                      color: Colors.red,
-                    ),
-                    const SizedBox(height: 12),
-                    Text(
-                      'Could not load your catalog.\n${snapshot.error}',
-                      textAlign: TextAlign.center,
-                    ),
-                    const SizedBox(height: 16),
-                    ElevatedButton(
-                      onPressed: _refresh,
-                      child: const Text('Retry'),
-                    ),
-                  ],
-                ),
-              ),
+            return ErrorState(
+              title: 'Could not load your catalog.',
+              details: snapshot.error.toString(),
+              onRetry: _refresh,
             );
           }
 
           final books = snapshot.data ?? [];
-
           if (books.isEmpty) {
-            return const Center(
-              child: Padding(
-                padding: EdgeInsets.all(24),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(Icons.menu_book, size: 48, color: Colors.grey),
-                    SizedBox(height: 12),
-                    Text('No books yet. Scan one to get started!'),
-                  ],
-                ),
-              ),
+            return const EmptyState(
+              icon: Icons.menu_book,
+              title: 'No books yet',
+              message: 'Scan one to get started.',
             );
           }
 
           return RefreshIndicator(
             onRefresh: _refresh,
-            child: ListView.builder(
+            child: ListView.separated(
+              padding: const EdgeInsets.fromLTRB(16, 8, 16, 96),
               itemCount: books.length,
+              separatorBuilder: (_, _) => const Divider(height: 1),
               itemBuilder: (context, index) {
-                final book = books[index];
-                return ListTile(
-                  leading: const Icon(Icons.book),
-                  title: Text(book.title),
-                  subtitle: Text(book.author),
-                  trailing: book.rating != null
-                      ? Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            const Icon(
-                              Icons.star,
-                              size: 16,
-                              color: Colors.amber,
-                            ),
-                            Text(' ${book.rating}'),
-                          ],
-                        )
-                      : null,
-                  onTap: () async {
-                    await Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => BookDetailScreen(book: book),
-                      ),
-                    );
-                    if (mounted) {
-                      _refresh();
-                    }
-                  },
-                );
+                return _BookTile(book: books[index], onChanged: _refresh);
               },
             ),
           );
         },
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          await Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const ScanScreen()),
-          );
-          if (mounted) {
-            _refresh();
-          }
-        },
-        child: const Icon(Icons.qr_code_scanner),
+    );
+  }
+}
+
+class _BookTile extends StatelessWidget {
+  final Book book;
+  final Future<void> Function() onChanged;
+
+  const _BookTile({required this.book, required this.onChanged});
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      contentPadding: const EdgeInsets.symmetric(vertical: 8),
+      leading: BookCover(title: book.title, coverUrl: book.coverUrl, width: 52),
+      title: Text(book.title),
+      subtitle: Text(
+        [book.author, book.statusLabel].whereType<String>().join(' - '),
+        maxLines: 2,
+        overflow: TextOverflow.ellipsis,
       ),
+      trailing: book.rating != null
+          ? Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Icon(Icons.star, size: 16, color: Colors.amber),
+                Text(' ${book.rating}'),
+              ],
+            )
+          : null,
+      onTap: () async {
+        await Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => BookDetailScreen(book: book)),
+        );
+        await onChanged();
+      },
     );
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'catalog_screen.dart';
+import 'home_shell.dart';
+import 'theme.dart';
 
 void main() {
   runApp(const BookCatalogApp());
@@ -13,11 +14,9 @@ class BookCatalogApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Book Catalog',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: const CatalogScreen(),
+      debugShowCheckedModeBanner: false,
+      theme: buildAppTheme(),
+      home: const HomeShell(),
     );
   }
 }
