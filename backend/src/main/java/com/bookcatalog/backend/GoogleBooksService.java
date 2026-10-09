@@ -17,6 +17,66 @@ public class GoogleBooksService {
     @Value("${google.books.api.key:}")
     private String googleBooksApiKey;
 
+    private static String openLibraryCover(String isbn) {
+        return "https://covers.openlibrary.org/b/isbn/" + isbn + "-M.jpg?default=false";
+    }
+
+    private static String cleanText(String raw) {
+        if (raw == null) return null;
+        String text = raw
+                .replaceAll("(?i)<br\\s*/?>|</p>", "\n")
+                .replaceAll("<[^>]+>", "")
+                .replace("&quot;", "\"")
+                .replace("&#39;", "'")
+                .replace("&nbsp;", " ")
+                .replace("&amp;", "&")
+                .replaceAll("[ \\t]+", " ")
+                .replaceAll("\\n\\s*\\n+", "\n\n")
+                .trim();
+        return text.isEmpty() ? null : text;
+    }
+
+    @SuppressWarnings("unchecked")
+    private static String googleCover(Map<String, Object> volumeInfo, String isbn) {
+        Map<String, Object> images = (Map<String, Object>) volumeInfo.get("imageLinks");
+        if (images != null) {
+            Object thumb = images.get("thumbnail");
+            if (thumb == null) thumb = images.get("smallThumbnail");
+            if (thumb != null) {
+                return thumb.toString().replace("http://", "https://").replace("&edge=curl", "");
+            }
+        }
+        return openLibraryCover(isbn);
+    }
+
+    private static String extractDescription(Object value) {
+        if (value instanceof String s) return cleanText(s);
+        if (value instanceof Map<?, ?> m && m.get("value") instanceof String s) return cleanText(s);
+        return null;
+    }
+
+    @SuppressWarnings("unchecked")
+    private String fetchOpenLibraryDescription(String editionKey) {
+        if (editionKey == null) return null;
+        try {
+            Map<String, Object> edition = openLibraryClient.get()
+                    .uri(editionKey + ".json").retrieve().body(Map.class);
+            if (edition == null) return null;
+
+            String fromEdition = extractDescription(edition.get("description"));
+            if (fromEdition != null) return fromEdition;
+
+            List<Map<String, Object>> works = (List<Map<String, Object>>) edition.get("works");
+            if (works == null || works.isEmpty()) return null;
+
+            Map<String, Object> work = openLibraryClient.get()
+                    .uri(works.get(0).get("key") + ".json").retrieve().body(Map.class);
+            return work == null ? null : extractDescription(work.get("description"));
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
     public Book lookupByIsbn(String isbn) {
         if (googleBooksApiKey != null && !googleBooksApiKey.isBlank()) {
             Book book = tryGoogleBooks(isbn);
@@ -61,7 +121,12 @@ public class GoogleBooksService {
                 book.setTags(new ArrayList<>());
             }
 
-            book.setDescription((String) volumeInfo.get("description"));
+            book.setDescription(cleanText((String) volumeInfo.get("description")));
+            book.setCoverUrl(googleCover(volumeInfo, isbn));
+            book.setPublisher((String) volumeInfo.get("publisher"));
+            book.setPublishedDate((String) volumeInfo.get("publishedDate"));
+            Object pages = volumeInfo.get("pageCount");
+            if (pages instanceof Number n && n.intValue() > 0) book.setPageCount(n.intValue());
 
             return book;
         } catch (Exception e) {
@@ -110,6 +175,23 @@ public class GoogleBooksService {
             } else {
                 book.setTags(new ArrayList<>());
             }
+
+            Map<String, Object> cover = (Map<String, Object>) data.get("cover");
+            String coverUrl = null;
+            if (cover != null) {
+                coverUrl = (String) (cover.get("medium") != null ? cover.get("medium") : cover.get("large"));
+            }
+            book.setCoverUrl(coverUrl != null ? coverUrl : openLibraryCover(isbn));
+
+            List<Map<String, Object>> publishers = (List<Map<String, Object>>) data.get("publishers");
+            if (publishers != null && !publishers.isEmpty()) {
+                book.setPublisher((String) publishers.get(0).get("name"));
+            }
+            book.setPublishedDate((String) data.get("publish_date"));
+            Object pages = data.get("number_of_pages");
+            if (pages instanceof Number n && n.intValue() > 0) book.setPageCount(n.intValue());
+
+            book.setDescription(fetchOpenLibraryDescription((String) data.get("key")));
 
             return book;
         } catch (Exception e) {
@@ -163,6 +245,7 @@ public class GoogleBooksService {
                 List<String> categories = (List<String>) volumeInfo.get("categories");
                 book.setTags(categories != null ? categories : List.of());
                 book.setGenre(categories != null && !categories.isEmpty() ? categories.get(0) : null);
+                book.setCoverUrl(googleCover(volumeInfo, book.getIsbn()));
 
                 results.add(book);
             }
@@ -177,7 +260,7 @@ public class GoogleBooksService {
         List<Book> results = new ArrayList<>();
         try {
             Map<String, Object> response = openLibraryClient.get()
-                    .uri("/search.json?subject={tag}&fields=title,author_name,isbn,subject&limit=10", tag)
+                    .uri("/search.json?subject={tag}&fields=title,author_name,isbn,subject,cover_i&limit=10", tag)
                     .retrieve()
                     .body(Map.class);
 
@@ -203,6 +286,10 @@ public class GoogleBooksService {
                 List<String> subjects = (List<String>) doc.get("subject");
                 book.setTags(subjects != null ? subjects : List.of());
                 book.setGenre(subjects != null && !subjects.isEmpty() ? subjects.get(0) : tag);
+                Object coverId = doc.get("cover_i");
+                book.setCoverUrl(coverId != null
+                        ? "https://covers.openlibrary.org/b/id/" + coverId + "-M.jpg"
+                        : openLibraryCover(isbns.get(0)));
 
                 results.add(book);
             }

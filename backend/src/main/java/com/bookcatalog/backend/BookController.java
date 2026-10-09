@@ -2,6 +2,7 @@ package com.bookcatalog.backend;
 
 import jakarta.validation.Valid;
 import java.util.List;
+import java.util.Map;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -65,6 +66,25 @@ public class BookController {
         return ResponseEntity.status(HttpStatus.CREATED).body(saved);
     }
 
+    @PostMapping("/{id}/refresh")
+    public ResponseEntity<Book> refreshBook(@PathVariable Long id) {
+        return bookRepository.findById(id)
+                .map(b -> ResponseEntity.ok(fillMissingDetails(b)))
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    @PostMapping("/refresh-all")
+    public Map<String, Integer> refreshAll() {
+        int attempted = 0;
+        for (Book b : bookRepository.findAll()) {
+            if (isBlank(b.getDescription()) || isBlank(b.getCoverUrl())) {
+                fillMissingDetails(b);
+                attempted++;
+            }
+        }
+        return Map.of("attempted", attempted);
+    }
+
     @PatchMapping("/{id}")
     public ResponseEntity<Book> updateBook(@PathVariable Long id, @RequestBody Book updates) {
         return bookRepository.findById(id)
@@ -100,5 +120,20 @@ public class BookController {
         }
         bookRepository.deleteById(id);
         return ResponseEntity.noContent().build();
+    }
+
+    private Book fillMissingDetails(Book existing) {
+        Book fresh = googleBooksService.lookupByIsbn(existing.getIsbn());
+        if (fresh == null) return existing;
+        if (isBlank(existing.getDescription())) existing.setDescription(fresh.getDescription());
+        if (isBlank(existing.getCoverUrl())) existing.setCoverUrl(fresh.getCoverUrl());
+        if (isBlank(existing.getPublisher())) existing.setPublisher(fresh.getPublisher());
+        if (isBlank(existing.getPublishedDate())) existing.setPublishedDate(fresh.getPublishedDate());
+        if (existing.getPageCount() == null) existing.setPageCount(fresh.getPageCount());
+        return bookRepository.save(existing);
+    }
+
+    private static boolean isBlank(String s) {
+        return s == null || s.isBlank();
     }
 }

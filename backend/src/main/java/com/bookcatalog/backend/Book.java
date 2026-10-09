@@ -42,8 +42,17 @@ public class Book {
     @Column(name = "tag")
     private List<String> tags = new ArrayList<>();
 
-    @Column(length = 2000)
+    @Column(columnDefinition = "TEXT")
     private String description;
+
+    @Column(length = 500)
+    private String coverUrl;
+
+    private String publisher;
+
+    private String publishedDate;
+
+    private Integer pageCount;
 
     @Min(1)
     @Max(5)
@@ -112,6 +121,38 @@ public class Book {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getCoverUrl() {
+        return coverUrl;
+    }
+
+    public void setCoverUrl(String coverUrl) {
+        this.coverUrl = coverUrl;
+    }
+
+    public String getPublisher() {
+        return publisher;
+    }
+
+    public void setPublisher(String publisher) {
+        this.publisher = publisher;
+    }
+
+    public String getPublishedDate() {
+        return publishedDate;
+    }
+
+    public void setPublishedDate(String publishedDate) {
+        this.publishedDate = publishedDate;
+    }
+
+    public Integer getPageCount() {
+        return pageCount;
+    }
+
+    public void setPageCount(Integer pageCount) {
+        this.pageCount = pageCount;
     }
 
     public Integer getRating() {
