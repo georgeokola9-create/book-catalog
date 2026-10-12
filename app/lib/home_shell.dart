@@ -13,12 +13,10 @@ class HomeShell extends StatefulWidget {
 
 class _HomeShellState extends State<HomeShell> {
   int _selectedIndex = 0;
-  int _catalogVersion = 0;
   int _recommendationsVersion = 0;
 
   void _refreshTabs() {
     setState(() {
-      _catalogVersion++;
       _recommendationsVersion++;
     });
   }
@@ -36,7 +34,7 @@ class _HomeShellState extends State<HomeShell> {
   @override
   Widget build(BuildContext context) {
     final screens = [
-      CatalogScreen(refreshToken: _catalogVersion),
+      const CatalogScreen(),
       RecommendationsScreen(refreshToken: _recommendationsVersion),
     ];
 

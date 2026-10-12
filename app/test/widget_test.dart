@@ -7,7 +7,7 @@ void main() {
   testWidgets('shows catalog screen', (WidgetTester tester) async {
     await tester.pumpWidget(const BookCatalogApp());
 
-    expect(find.text('My Catalog'), findsOneWidget);
-    expect(find.byIcon(Icons.qr_code_scanner), findsOneWidget);
+    expect(find.text('My Library'), findsOneWidget);
+    expect(find.byIcon(Icons.add), findsOneWidget);
   });
 }

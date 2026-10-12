@@ -1,10 +1,13 @@
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 
 import 'book.dart';
 import 'config.dart';
 import 'isbn_utils.dart';
+
+final libraryVersion = ValueNotifier<int>(0);
 
 class ApiService {
   const ApiService();
@@ -12,9 +15,11 @@ class ApiService {
   static const instance = ApiService();
 
   Future<List<Book>> fetchBooks() async {
-    final response = await http.get(Uri.parse('$apiBaseUrl/books'));
+    final response = await http.get(Uri.parse('${AppConfig.baseUrl}/books'));
     if (response.statusCode != 200) {
-      throw Exception('Failed to load books (status ${response.statusCode})');
+      throw ApiException(
+        'Failed to load books (status ${response.statusCode})',
+      );
     }
 
     final data = jsonDecode(response.body) as List<dynamic>;
@@ -25,10 +30,10 @@ class ApiService {
 
   Future<List<Book>> fetchRecommendations({int limit = 8}) async {
     final response = await http.get(
-      Uri.parse('$apiBaseUrl/recommendations?limit=$limit'),
+      Uri.parse('${AppConfig.baseUrl}/recommendations?limit=$limit'),
     );
     if (response.statusCode != 200) {
-      throw Exception(
+      throw ApiException(
         'Failed to load recommendations (status ${response.statusCode})',
       );
     }
@@ -47,10 +52,11 @@ class ApiService {
   Future<ScanOutcome> scanIsbn(String rawIsbn) async {
     final isbn = normalizeIsbn(rawIsbn);
     final response = await http.post(
-      Uri.parse('$apiBaseUrl/books/scan?isbn=$isbn'),
+      Uri.parse('${AppConfig.baseUrl}/books/scan?isbn=$isbn'),
     );
 
     if (response.statusCode == 200 || response.statusCode == 201) {
+      libraryVersion.value++;
       return ScanOutcome(
         book: Book.fromJson(jsonDecode(response.body) as Map<String, dynamic>),
         isNew: response.statusCode == 201,
@@ -64,13 +70,17 @@ class ApiService {
 
   Future<Book> refreshBook(int id) async {
     final response = await http.post(
-      Uri.parse('$apiBaseUrl/books/$id/refresh'),
+      Uri.parse('${AppConfig.baseUrl}/books/$id/refresh'),
     );
     if (response.statusCode != 200) {
-      throw Exception('Could not fetch book details');
+      throw ApiException('Could not fetch book details');
     }
 
-    return Book.fromJson(jsonDecode(response.body) as Map<String, dynamic>);
+    final book = Book.fromJson(
+      jsonDecode(response.body) as Map<String, dynamic>,
+    );
+    libraryVersion.value++;
+    return book;
   }
 
   Future<Book> updateBook(int id, {int? rating, String? status}) async {
@@ -79,7 +89,7 @@ class ApiService {
     if (status != null) requestBody['status'] = status;
 
     final response = await http.patch(
-      Uri.parse('$apiBaseUrl/books/$id'),
+      Uri.parse('${AppConfig.baseUrl}/books/$id'),
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode(requestBody),
     );
@@ -88,7 +98,11 @@ class ApiService {
       throw ApiException('Failed to update (status ${response.statusCode})');
     }
 
-    return Book.fromJson(jsonDecode(response.body) as Map<String, dynamic>);
+    final book = Book.fromJson(
+      jsonDecode(response.body) as Map<String, dynamic>,
+    );
+    libraryVersion.value++;
+    return book;
   }
 }
 
