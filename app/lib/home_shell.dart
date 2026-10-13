@@ -13,29 +13,19 @@ class HomeShell extends StatefulWidget {
 
 class _HomeShellState extends State<HomeShell> {
   int _selectedIndex = 0;
-  int _recommendationsVersion = 0;
-
-  void _refreshTabs() {
-    setState(() {
-      _recommendationsVersion++;
-    });
-  }
 
   Future<void> _openScanner() async {
     await Navigator.push<void>(
       context,
       MaterialPageRoute(builder: (context) => const ScanScreen()),
     );
-    if (mounted) {
-      _refreshTabs();
-    }
   }
 
   @override
   Widget build(BuildContext context) {
     final screens = [
       const CatalogScreen(),
-      RecommendationsScreen(refreshToken: _recommendationsVersion),
+      const RecommendationsScreen(),
     ];
 
     return Scaffold(
