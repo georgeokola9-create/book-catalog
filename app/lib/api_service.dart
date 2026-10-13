@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
@@ -13,6 +14,32 @@ class ApiService {
   const ApiService();
 
   static const instance = ApiService();
+  static final http.Client _client = http.Client();
+  static const Duration _scanTimeout = Duration(seconds: 15);
+
+  Uri _uri(String path, [Map<String, String>? query]) {
+    final base = Uri.parse(AppConfig.baseUrl);
+    return base.replace(
+      path: '${base.path}$path',
+      queryParameters: query,
+    );
+  }
+
+  Future<T> _run<T>(
+    Future<T> Function() action, {
+    Duration? timeout,
+  }) {
+    final future = action();
+    return timeout == null ? future : future.timeout(timeout);
+  }
+
+  Object? _json(http.Response response) => jsonDecode(response.body);
+
+  void _ensureOk(http.Response response, String message) {
+    if (response.statusCode < 200 || response.statusCode >= 300) {
+      throw ApiException('$message (status ${response.statusCode})');
+    }
+  }
 
   Future<List<Book>> fetchBooks() async {
     final response = await http.get(Uri.parse('${AppConfig.baseUrl}/books'));
@@ -83,6 +110,17 @@ class ApiService {
     return book;
   }
 
+  /// Fetches book details without saving the book.
+  Future<Book?> lookupIsbn(String isbn) async {
+    final res = await _run(
+      () => _client.get(_uri('/books/lookup', {'isbn': isbn})),
+      timeout: _scanTimeout,
+    );
+    if (res.statusCode == 404) return null;
+    _ensureOk(res, 'Could not load book details');
+    return Book.fromJson(_json(res) as Map<String, dynamic>);
+  }
+
   Future<Book> updateBook(int id, {int? rating, String? status}) async {
     final requestBody = <String, Object>{};
     if (rating != null) requestBody['rating'] = rating;
@@ -103,6 +141,13 @@ class ApiService {
     );
     libraryVersion.value++;
     return book;
+  }
+
+  Future<void> deleteBook(int id) async {
+    final response = await _client.delete(_uri('/books/$id'));
+    if (response.statusCode != 204) {
+      throw ApiException('Failed to delete (status ${response.statusCode})');
+    }
   }
 }
 

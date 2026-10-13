@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
@@ -13,6 +14,9 @@ public class GoogleBooksService {
 
     private final RestClient googleClient = RestClient.create("https://www.googleapis.com/books/v1");
     private final RestClient openLibraryClient = RestClient.create("https://openlibrary.org");
+
+    // In-memory only. Cleared on restart and never written to the database.
+    private final Map<String, Book> detailsCache = new ConcurrentHashMap<>();
 
     @Value("${google.books.api.key:}")
     private String googleBooksApiKey;
@@ -85,6 +89,22 @@ public class GoogleBooksService {
             }
         }
         return tryOpenLibrary(isbn);
+    }
+
+    /**
+     * Cached metadata lookup for display purposes only.
+     * Never persist the returned object; use lookupByIsbn() when saving a book.
+     */
+    public Book lookupCached(String isbn) {
+        Book cached = detailsCache.get(isbn);
+        if (cached != null) return cached;
+
+        Book fresh = lookupByIsbn(isbn);
+        if (fresh != null) {
+            if (detailsCache.size() > 500) detailsCache.clear(); // keep memory bounded
+            detailsCache.put(isbn, fresh);
+        }
+        return fresh;
     }
 
     @SuppressWarnings("unchecked")
@@ -246,6 +266,9 @@ public class GoogleBooksService {
                 book.setTags(categories != null ? categories : List.of());
                 book.setGenre(categories != null && !categories.isEmpty() ? categories.get(0) : null);
                 book.setCoverUrl(googleCover(volumeInfo, book.getIsbn()));
+                book.setDescription(cleanText((String) volumeInfo.get("description")));
+                book.setPublisher((String) volumeInfo.get("publisher"));
+                book.setPublishedDate((String) volumeInfo.get("publishedDate"));
 
                 results.add(book);
             }
