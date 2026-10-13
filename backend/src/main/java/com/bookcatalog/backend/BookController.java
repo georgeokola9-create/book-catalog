@@ -41,6 +41,21 @@ public class BookController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
+    // GET /books/lookup?isbn=... - metadata only, does not save anything
+    @GetMapping("/lookup")
+    public ResponseEntity<Book> lookup(@RequestParam String isbn) {
+        String clean = isbn.replaceAll("[\\s-]", "");
+        if (!clean.matches("\\d{13}|\\d{9}[\\dXx]")) {
+            return ResponseEntity.badRequest().build();
+        }
+        var existing = bookRepository.findByIsbn(clean);
+        if (existing.isPresent()) {
+            return ResponseEntity.ok(existing.get());
+        }
+        Book book = googleBooksService.lookupCached(clean);
+        return book == null ? ResponseEntity.notFound().build() : ResponseEntity.ok(book);
+    }
+
     @PostMapping
     public ResponseEntity<Book> createBook(@Valid @RequestBody Book book) {
         if (bookRepository.existsByIsbn(book.getIsbn())) {

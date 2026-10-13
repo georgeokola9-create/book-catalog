@@ -6,6 +6,10 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -75,10 +79,49 @@ public class RecommendationService {
 
         scored.sort((a, b) -> Double.compare(b.getValue(), a.getValue()));
 
-        return scored.stream()
+        List<Book> top = scored.stream()
                 .limit(limit)
                 .map(Map.Entry::getKey)
                 .toList();
+
+        enrichDetails(top);
+        return top;
+    }
+
+    /** Fills in synopsis and publisher info for the final picks, in parallel and without saving anything. */
+    private void enrichDetails(List<Book> books) {
+        List<Book> missing = books.stream()
+                .filter(b -> b.getDescription() == null || b.getDescription().isBlank())
+                .toList();
+        if (missing.isEmpty()) return;
+
+        ExecutorService pool = Executors.newFixedThreadPool(Math.min(missing.size(), 6));
+        try {
+            List<Callable<Void>> tasks = missing.stream()
+                    .map(book -> (Callable<Void>) () -> {
+                        Book details = googleBooksService.lookupCached(book.getIsbn());
+                        if (details != null) fillMissing(book, details);
+                        return null;
+                    })
+                    .toList();
+            pool.invokeAll(tasks, 25, TimeUnit.SECONDS);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        } finally {
+            pool.shutdownNow();
+        }
+    }
+
+    private static void fillMissing(Book target, Book source) {
+        if (isBlank(target.getDescription())) target.setDescription(source.getDescription());
+        if (isBlank(target.getCoverUrl())) target.setCoverUrl(source.getCoverUrl());
+        if (isBlank(target.getPublisher())) target.setPublisher(source.getPublisher());
+        if (isBlank(target.getPublishedDate())) target.setPublishedDate(source.getPublishedDate());
+        if (target.getPageCount() == null) target.setPageCount(source.getPageCount());
+    }
+
+    private static boolean isBlank(String s) {
+        return s == null || s.isBlank();
     }
 
     private List<String> tagsFor(Book book) {

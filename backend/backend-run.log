@@ -35,40 +35,40 @@
 
  :: Spring Boot ::                (v4.1.0)
 
-2026-10-08T12:30:53.662+03:00  INFO 16488 --- [  restartedMain] c.b.backend.BackendApplication           : Starting BackendApplication using Java 21.0.10 with PID 16488 (C:\Users\USER\Desktop\book-catalog\backend\target\classes started by USER in C:\Users\USER\Desktop\book-catalog\backend)
-2026-10-08T12:30:53.671+03:00  INFO 16488 --- [  restartedMain] c.b.backend.BackendApplication           : No active profile set, falling back to 1 default profile: "default"
-2026-10-08T12:30:53.672+03:00 DEBUG 16488 --- [  restartedMain] o.s.boot.SpringApplication               : Loading source class com.bookcatalog.backend.BackendApplication
-2026-10-08T12:30:53.785+03:00 DEBUG 16488 --- [  restartedMain] o.s.b.devtools.restart.ChangeableUrls    : Matching URLs for reloading : [file:/C:/Users/USER/Desktop/book-catalog/backend/target/classes/]
-2026-10-08T12:30:53.786+03:00 DEBUG 16488 --- [  restartedMain] o.s.b.d.settings.DevToolsSettings        : Included patterns for restart : []
-2026-10-08T12:30:53.786+03:00 DEBUG 16488 --- [  restartedMain] o.s.b.d.settings.DevToolsSettings        : Excluded patterns for restart : [/spring-boot-starter-[\w-]+/, /spring-boot/(bin|build|out)/, /spring-boot-starter/(bin|build|out)/, /spring-boot-devtools/(bin|build|out)/, /spring-boot-actuator/(bin|build|out)/, /spring-boot-autoconfigure/(bin|build|out)/]
-2026-10-08T12:30:53.786+03:00  INFO 16488 --- [  restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
-2026-10-08T12:30:53.787+03:00  INFO 16488 --- [  restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
-2026-10-08T12:30:53.788+03:00 DEBUG 16488 --- [  restartedMain] ConfigServletWebServerApplicationContext : Refreshing org.springframework.boot.web.server.servlet.context.AnnotationConfigServletWebServerApplicationContext@50c4e437
-2026-10-08T12:30:54.463+03:00 DEBUG 16488 --- [  restartedMain] ySourcesPropertyResolver$DefaultResolver : Found key 'DB_URL' in PropertySource 'Config resource 'file [.env]' via location 'optional:file:.env[.properties]'' with value of type String
-2026-10-08T12:30:54.920+03:00  INFO 16488 --- [  restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2026-10-08T12:30:54.958+03:00 DEBUG 16488 --- [  restartedMain] o.s.b.a.AutoConfigurationPackages        : @EnableAutoConfiguration was declared on a class in the package 'com.bookcatalog.backend'. Automatic @Repository and @Entity scanning is enabled.
-2026-10-08T12:30:55.005+03:00  INFO 16488 --- [  restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 60 ms. Found 1 JPA repository interface.
-2026-10-08T12:30:55.687+03:00 DEBUG 16488 --- [  restartedMain] o.s.b.t.s.TomcatServletWebServerFactory  : Code archive: C:\Users\USER\.m2\repository\org\springframework\boot\spring-boot-web-server\4.1.0\spring-boot-web-server-4.1.0.jar
-2026-10-08T12:30:55.688+03:00 DEBUG 16488 --- [  restartedMain] o.s.b.t.s.TomcatServletWebServerFactory  : Code archive: C:\Users\USER\.m2\repository\org\springframework\boot\spring-boot-web-server\4.1.0\spring-boot-web-server-4.1.0.jar
-2026-10-08T12:30:55.689+03:00 DEBUG 16488 --- [  restartedMain] o.s.b.t.s.TomcatServletWebServerFactory  : None of the document roots [src/main/webapp, public, static] point to a directory and will be ignored.
-2026-10-08T12:30:55.761+03:00  INFO 16488 --- [  restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8080 (http)
-2026-10-08T12:30:55.785+03:00  INFO 16488 --- [  restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-2026-10-08T12:30:55.785+03:00  INFO 16488 --- [  restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.22]
-2026-10-08T12:30:55.854+03:00 DEBUG 16488 --- [  restartedMain] b.w.c.s.WebApplicationContextInitializer : Published root WebApplicationContext as ServletContext attribute with name [org.springframework.web.context.WebApplicationContext.ROOT]
-2026-10-08T12:30:55.856+03:00  INFO 16488 --- [  restartedMain] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 2067 ms
-2026-10-08T12:30:55.879+03:00 DEBUG 16488 --- [  restartedMain] o.s.b.w.s.ServletContextInitializerBeans : Mapping filters: characterEncodingFilter urls=[/*] order=-2147483648, formContentFilter urls=[/*] order=-9900, requestContextFilter urls=[/*] order=-105
-2026-10-08T12:30:55.879+03:00 DEBUG 16488 --- [  restartedMain] o.s.b.w.s.ServletContextInitializerBeans : Mapping servlets: dispatcherServlet urls=[/]
-2026-10-08T12:30:55.917+03:00 DEBUG 16488 --- [  restartedMain] o.s.b.s.f.OrderedRequestContextFilter    : Filter 'requestContextFilter' configured for use
-2026-10-08T12:30:55.919+03:00 DEBUG 16488 --- [  restartedMain] o.s.b.s.f.OrderedCharacterEncodingFilter : Filter 'characterEncodingFilter' configured for use
-2026-10-08T12:30:55.920+03:00 DEBUG 16488 --- [  restartedMain] o.s.b.s.filter.OrderedFormContentFilter  : Filter 'formContentFilter' configured for use
-2026-10-08T12:30:56.127+03:00  INFO 16488 --- [  restartedMain] org.hibernate.orm.jpa                    : HHH008540: Processing PersistenceUnitInfo [name: default]
-2026-10-08T12:30:56.225+03:00  INFO 16488 --- [  restartedMain] org.hibernate.orm.core                   : HHH000001: Hibernate ORM core version 7.4.1.Final
-2026-10-08T12:30:57.189+03:00  INFO 16488 --- [  restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
-2026-10-08T12:30:57.257+03:00  INFO 16488 --- [  restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
-2026-10-08T12:30:57.512+03:00  INFO 16488 --- [  restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@2f4221d2
-2026-10-08T12:30:57.525+03:00  INFO 16488 --- [  restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
-2026-10-08T12:30:57.592+03:00  WARN 16488 --- [  restartedMain] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
-2026-10-08T12:30:57.642+03:00  INFO 16488 --- [  restartedMain] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+2026-10-12T15:02:15.754+03:00  INFO 16888 --- [  restartedMain] c.b.backend.BackendApplication           : Starting BackendApplication using Java 21.0.10 with PID 16888 (C:\Users\USER\Desktop\book-catalog\backend\target\classes started by USER in C:\Users\USER\Desktop\book-catalog\backend)
+2026-10-12T15:02:15.759+03:00  INFO 16888 --- [  restartedMain] c.b.backend.BackendApplication           : No active profile set, falling back to 1 default profile: "default"
+2026-10-12T15:02:15.760+03:00 DEBUG 16888 --- [  restartedMain] o.s.boot.SpringApplication               : Loading source class com.bookcatalog.backend.BackendApplication
+2026-10-12T15:02:15.866+03:00 DEBUG 16888 --- [  restartedMain] o.s.b.devtools.restart.ChangeableUrls    : Matching URLs for reloading : [file:/C:/Users/USER/Desktop/book-catalog/backend/target/classes/]
+2026-10-12T15:02:15.867+03:00 DEBUG 16888 --- [  restartedMain] o.s.b.d.settings.DevToolsSettings        : Included patterns for restart : []
+2026-10-12T15:02:15.868+03:00 DEBUG 16888 --- [  restartedMain] o.s.b.d.settings.DevToolsSettings        : Excluded patterns for restart : [/spring-boot-starter-[\w-]+/, /spring-boot/(bin|build|out)/, /spring-boot-starter/(bin|build|out)/, /spring-boot-devtools/(bin|build|out)/, /spring-boot-actuator/(bin|build|out)/, /spring-boot-autoconfigure/(bin|build|out)/]
+2026-10-12T15:02:15.868+03:00  INFO 16888 --- [  restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2026-10-12T15:02:15.868+03:00  INFO 16888 --- [  restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2026-10-12T15:02:15.869+03:00 DEBUG 16888 --- [  restartedMain] ConfigServletWebServerApplicationContext : Refreshing org.springframework.boot.web.server.servlet.context.AnnotationConfigServletWebServerApplicationContext@50c4e437
+2026-10-12T15:02:16.636+03:00 DEBUG 16888 --- [  restartedMain] ySourcesPropertyResolver$DefaultResolver : Found key 'DB_URL' in PropertySource 'Config resource 'file [.env]' via location 'optional:file:.env[.properties]'' with value of type String
+2026-10-12T15:02:17.358+03:00  INFO 16888 --- [  restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-10-12T15:02:17.440+03:00 DEBUG 16888 --- [  restartedMain] o.s.b.a.AutoConfigurationPackages        : @EnableAutoConfiguration was declared on a class in the package 'com.bookcatalog.backend'. Automatic @Repository and @Entity scanning is enabled.
+2026-10-12T15:02:17.584+03:00  INFO 16888 --- [  restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 197 ms. Found 1 JPA repository interface.
+2026-10-12T15:02:18.921+03:00 DEBUG 16888 --- [  restartedMain] o.s.b.t.s.TomcatServletWebServerFactory  : Code archive: C:\Users\USER\.m2\repository\org\springframework\boot\spring-boot-web-server\4.1.0\spring-boot-web-server-4.1.0.jar
+2026-10-12T15:02:18.922+03:00 DEBUG 16888 --- [  restartedMain] o.s.b.t.s.TomcatServletWebServerFactory  : Code archive: C:\Users\USER\.m2\repository\org\springframework\boot\spring-boot-web-server\4.1.0\spring-boot-web-server-4.1.0.jar
+2026-10-12T15:02:18.923+03:00 DEBUG 16888 --- [  restartedMain] o.s.b.t.s.TomcatServletWebServerFactory  : None of the document roots [src/main/webapp, public, static] point to a directory and will be ignored.
+2026-10-12T15:02:18.997+03:00  INFO 16888 --- [  restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8080 (http)
+2026-10-12T15:02:19.026+03:00  INFO 16888 --- [  restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-10-12T15:02:19.028+03:00  INFO 16888 --- [  restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.22]
+2026-10-12T15:02:19.111+03:00 DEBUG 16888 --- [  restartedMain] b.w.c.s.WebApplicationContextInitializer : Published root WebApplicationContext as ServletContext attribute with name [org.springframework.web.context.WebApplicationContext.ROOT]
+2026-10-12T15:02:19.114+03:00  INFO 16888 --- [  restartedMain] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 3242 ms
+2026-10-12T15:02:19.154+03:00 DEBUG 16888 --- [  restartedMain] o.s.b.w.s.ServletContextInitializerBeans : Mapping filters: characterEncodingFilter urls=[/*] order=-2147483648, formContentFilter urls=[/*] order=-9900, requestContextFilter urls=[/*] order=-105
+2026-10-12T15:02:19.156+03:00 DEBUG 16888 --- [  restartedMain] o.s.b.w.s.ServletContextInitializerBeans : Mapping servlets: dispatcherServlet urls=[/]
+2026-10-12T15:02:19.200+03:00 DEBUG 16888 --- [  restartedMain] o.s.b.s.f.OrderedRequestContextFilter    : Filter 'requestContextFilter' configured for use
+2026-10-12T15:02:19.203+03:00 DEBUG 16888 --- [  restartedMain] o.s.b.s.f.OrderedCharacterEncodingFilter : Filter 'characterEncodingFilter' configured for use
+2026-10-12T15:02:19.203+03:00 DEBUG 16888 --- [  restartedMain] o.s.b.s.filter.OrderedFormContentFilter  : Filter 'formContentFilter' configured for use
+2026-10-12T15:02:19.641+03:00  INFO 16888 --- [  restartedMain] org.hibernate.orm.jpa                    : HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-10-12T15:02:19.791+03:00  INFO 16888 --- [  restartedMain] org.hibernate.orm.core                   : HHH000001: Hibernate ORM core version 7.4.1.Final
+2026-10-12T15:02:20.624+03:00  INFO 16888 --- [  restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-10-12T15:02:20.700+03:00  INFO 16888 --- [  restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-10-12T15:02:20.977+03:00  INFO 16888 --- [  restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@4b139dd9
+2026-10-12T15:02:20.990+03:00  INFO 16888 --- [  restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-10-12T15:02:21.053+03:00  WARN 16888 --- [  restartedMain] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-10-12T15:02:21.096+03:00  INFO 16888 --- [  restartedMain] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
 	Database JDBC URL [jdbc:postgresql://localhost:5432/bookcatalog]
 	Database driver: PostgreSQL JDBC Driver
 	Database dialect: PostgreSQLDialect
@@ -80,16 +80,16 @@
 	Pool: DataSourceConnectionProvider
 	Minimum pool size: undefined/unknown
 	Maximum pool size: undefined/unknown
-2026-10-08T12:30:59.473+03:00  INFO 16488 --- [  restartedMain] org.hibernate.orm.core                   : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-2026-10-08T12:30:59.640+03:00  INFO 16488 --- [  restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
-2026-10-08T12:30:59.755+03:00  INFO 16488 --- [  restartedMain] o.s.d.j.r.query.QueryEnhancerFactories   : Hibernate is in classpath; If applicable, HQL parser will be used.
-2026-10-08T12:31:00.312+03:00  WARN 16488 --- [  restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2026-10-08T12:31:00.553+03:00 DEBUG 16488 --- [  restartedMain] s.w.s.m.m.a.RequestMappingHandlerMapping : 11 mappings in 'requestMappingHandlerMapping'
-2026-10-08T12:31:00.597+03:00 DEBUG 16488 --- [  restartedMain] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
-2026-10-08T12:31:00.628+03:00 DEBUG 16488 --- [  restartedMain] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 2 RequestBodyAdvice, 1 ResponseBodyAdvice
-2026-10-08T12:31:00.687+03:00 DEBUG 16488 --- [  restartedMain] .m.m.a.ExceptionHandlerExceptionResolver : ControllerAdvice beans: 0 @ExceptionHandler, 1 ResponseBodyAdvice
-2026-10-08T12:31:00.837+03:00  INFO 16488 --- [  restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8080 (http) with context path '/'
-2026-10-08T12:31:00.855+03:00 DEBUG 16488 --- [  restartedMain] .s.b.a.l.ConditionEvaluationReportLogger : 
+2026-10-12T15:02:23.315+03:00  INFO 16888 --- [  restartedMain] org.hibernate.orm.core                   : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-10-12T15:02:23.456+03:00  INFO 16888 --- [  restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-10-12T15:02:23.584+03:00  INFO 16888 --- [  restartedMain] o.s.d.j.r.query.QueryEnhancerFactories   : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-10-12T15:02:24.189+03:00  WARN 16888 --- [  restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-10-12T15:02:24.442+03:00 DEBUG 16888 --- [  restartedMain] s.w.s.m.m.a.RequestMappingHandlerMapping : 12 mappings in 'requestMappingHandlerMapping'
+2026-10-12T15:02:24.491+03:00 DEBUG 16888 --- [  restartedMain] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+2026-10-12T15:02:24.525+03:00 DEBUG 16888 --- [  restartedMain] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 2 RequestBodyAdvice, 1 ResponseBodyAdvice
+2026-10-12T15:02:24.586+03:00 DEBUG 16888 --- [  restartedMain] .m.m.a.ExceptionHandlerExceptionResolver : ControllerAdvice beans: 0 @ExceptionHandler, 1 ResponseBodyAdvice
+2026-10-12T15:02:24.738+03:00  INFO 16888 --- [  restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8080 (http) with context path '/'
+2026-10-12T15:02:24.753+03:00 DEBUG 16888 --- [  restartedMain] .s.b.a.l.ConditionEvaluationReportLogger : 
 
 
 ============================
@@ -737,94 +737,53 @@ Unconditional classes:
 
 
 
-2026-10-08T12:31:00.860+03:00  INFO 16488 --- [  restartedMain] c.b.backend.BackendApplication           : Started BackendApplication in 8.197 seconds (process running for 9.018)
-2026-10-08T12:31:00.862+03:00 DEBUG 16488 --- [  restartedMain] o.s.b.a.ApplicationAvailabilityBean      : Application availability state LivenessState changed to CORRECT
-2026-10-08T12:31:00.865+03:00 DEBUG 16488 --- [  restartedMain] o.s.boot.devtools.restart.Restarter      : Creating new Restarter for thread Thread[#1,main,5,main]
-2026-10-08T12:31:00.867+03:00 DEBUG 16488 --- [  restartedMain] o.s.boot.devtools.restart.Restarter      : Immediately restarting application
-2026-10-08T12:31:00.868+03:00 DEBUG 16488 --- [  restartedMain] o.s.boot.devtools.restart.Restarter      : Starting application com.bookcatalog.backend.BackendApplication with URLs [file:/C:/Users/USER/Desktop/book-catalog/backend/target/classes/]
-2026-10-08T12:31:00.869+03:00 DEBUG 16488 --- [  restartedMain] o.s.b.a.ApplicationAvailabilityBean      : Application availability state ReadinessState changed to ACCEPTING_TRAFFIC
-2026-10-08T12:31:19.916+03:00  INFO 16488 --- [nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
-2026-10-08T12:31:19.917+03:00  INFO 16488 --- [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
-2026-10-08T12:31:19.917+03:00 DEBUG 16488 --- [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Detected StandardServletMultipartResolver
-2026-10-08T12:31:19.918+03:00 DEBUG 16488 --- [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Detected AcceptHeaderLocaleResolver
-2026-10-08T12:31:19.919+03:00 DEBUG 16488 --- [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Detected org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator@5bda88ca
-2026-10-08T12:31:19.920+03:00 DEBUG 16488 --- [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Detected org.springframework.web.servlet.support.SessionFlashMapManager@20b0c3c8
-2026-10-08T12:31:19.921+03:00 DEBUG 16488 --- [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : enableLoggingRequestDetails='false': request parameters and headers will be masked to prevent unsafe logging of potentially sensitive data
-2026-10-08T12:31:19.921+03:00  INFO 16488 --- [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 4 ms
-2026-10-08T12:31:19.936+03:00 DEBUG 16488 --- [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : POST "/books/refresh-all", parameters={masked}
-2026-10-08T12:31:19.950+03:00 DEBUG 16488 --- [nio-8080-exec-1] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.bookcatalog.backend.BookController#refreshAll()
-2026-10-08T12:31:20.240+03:00 DEBUG 16488 --- [nio-8080-exec-1] org.hibernate.SQL                        : select b1_0.id,b1_0.author,b1_0.cover_url,b1_0.date_added,b1_0.description,b1_0.genre,b1_0.isbn,b1_0.page_count,b1_0.published_date,b1_0.publisher,b1_0.rating,b1_0.status,b1_0.title from books b1_0
+2026-10-12T15:02:24.758+03:00  INFO 16888 --- [  restartedMain] c.b.backend.BackendApplication           : Started BackendApplication in 9.941 seconds (process running for 11.267)
+2026-10-12T15:02:24.760+03:00 DEBUG 16888 --- [  restartedMain] o.s.b.a.ApplicationAvailabilityBean      : Application availability state LivenessState changed to CORRECT
+2026-10-12T15:02:24.764+03:00 DEBUG 16888 --- [  restartedMain] o.s.boot.devtools.restart.Restarter      : Creating new Restarter for thread Thread[#1,main,5,main]
+2026-10-12T15:02:24.764+03:00 DEBUG 16888 --- [  restartedMain] o.s.boot.devtools.restart.Restarter      : Immediately restarting application
+2026-10-12T15:02:24.765+03:00 DEBUG 16888 --- [  restartedMain] o.s.boot.devtools.restart.Restarter      : Starting application com.bookcatalog.backend.BackendApplication with URLs [file:/C:/Users/USER/Desktop/book-catalog/backend/target/classes/]
+2026-10-12T15:02:24.766+03:00 DEBUG 16888 --- [  restartedMain] o.s.b.a.ApplicationAvailabilityBean      : Application availability state ReadinessState changed to ACCEPTING_TRAFFIC
+2026-10-12T15:02:44.137+03:00  INFO 16888 --- [nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-10-12T15:02:44.137+03:00  INFO 16888 --- [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-10-12T15:02:44.138+03:00 DEBUG 16888 --- [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Detected StandardServletMultipartResolver
+2026-10-12T15:02:44.139+03:00 DEBUG 16888 --- [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Detected AcceptHeaderLocaleResolver
+2026-10-12T15:02:44.142+03:00 DEBUG 16888 --- [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Detected org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator@647c22d9
+2026-10-12T15:02:44.145+03:00 DEBUG 16888 --- [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Detected org.springframework.web.servlet.support.SessionFlashMapManager@6d1bfbdf
+2026-10-12T15:02:44.147+03:00 DEBUG 16888 --- [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : enableLoggingRequestDetails='false': request parameters and headers will be masked to prevent unsafe logging of potentially sensitive data
+2026-10-12T15:02:44.148+03:00  INFO 16888 --- [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 10 ms
+2026-10-12T15:02:44.167+03:00 DEBUG 16888 --- [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : GET "/books", parameters={}
+2026-10-12T15:02:44.188+03:00 DEBUG 16888 --- [nio-8080-exec-1] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.bookcatalog.backend.BookController#getAllBooks()
+2026-10-12T15:02:44.659+03:00 DEBUG 16888 --- [nio-8080-exec-1] org.hibernate.SQL                        : select b1_0.id,b1_0.author,b1_0.cover_url,b1_0.date_added,b1_0.description,b1_0.genre,b1_0.isbn,b1_0.page_count,b1_0.published_date,b1_0.publisher,b1_0.rating,b1_0.status,b1_0.title from books b1_0
 Hibernate: select b1_0.id,b1_0.author,b1_0.cover_url,b1_0.date_added,b1_0.description,b1_0.genre,b1_0.isbn,b1_0.page_count,b1_0.published_date,b1_0.publisher,b1_0.rating,b1_0.status,b1_0.title from books b1_0
-Google Books lookup failed: 503 Service Unavailable: "{<EOL>  "error": {<EOL>    "code": 503,<EOL>    "message": "Service temporarily unavailable.",<EOL>    "errors": [<EOL>      {<EOL>        "message": "Service temporarily unavailable.",<EOL>        "domain": "global",<EOL>        "reason": "backendFailed"<EOL>      }<EOL>    ]<EOL>  }<EOL>}<EOL>"
-2026-10-08T12:31:25.898+03:00 DEBUG 16488 --- [nio-8080-exec-1] o.s.web.client.DefaultRestClient         : Reading to [java.util.Map<?, ?>]
-2026-10-08T12:31:26.463+03:00 DEBUG 16488 --- [nio-8080-exec-1] o.s.web.client.DefaultRestClient         : Reading to [java.util.Map<?, ?>]
-2026-10-08T12:31:26.964+03:00 DEBUG 16488 --- [nio-8080-exec-1] o.s.web.client.DefaultRestClient         : Reading to [java.util.Map<?, ?>]
-2026-10-08T12:31:27.032+03:00 DEBUG 16488 --- [nio-8080-exec-1] org.hibernate.SQL                        : update books set author=?,cover_url=?,date_added=?,description=?,genre=?,isbn=?,page_count=?,published_date=?,publisher=?,rating=?,status=?,title=? where id=?
-Hibernate: update books set author=?,cover_url=?,date_added=?,description=?,genre=?,isbn=?,page_count=?,published_date=?,publisher=?,rating=?,status=?,title=? where id=?
-2026-10-08T12:31:28.271+03:00 DEBUG 16488 --- [nio-8080-exec-1] o.s.web.client.DefaultRestClient         : Reading to [java.util.Map<?, ?>]
-2026-10-08T12:31:37.964+03:00 DEBUG 16488 --- [nio-8080-exec-1] o.s.web.client.DefaultRestClient         : Reading to [java.util.Map<?, ?>]
-2026-10-08T12:31:38.509+03:00 DEBUG 16488 --- [nio-8080-exec-1] o.s.web.client.DefaultRestClient         : Reading to [java.util.Map<?, ?>]
-2026-10-08T12:31:38.514+03:00 DEBUG 16488 --- [nio-8080-exec-1] org.hibernate.SQL                        : update books set author=?,cover_url=?,date_added=?,description=?,genre=?,isbn=?,page_count=?,published_date=?,publisher=?,rating=?,status=?,title=? where id=?
-Hibernate: update books set author=?,cover_url=?,date_added=?,description=?,genre=?,isbn=?,page_count=?,published_date=?,publisher=?,rating=?,status=?,title=? where id=?
-Google Books lookup failed: 503 Service Unavailable: "{<EOL>  "error": {<EOL>    "code": 503,<EOL>    "message": "Service temporarily unavailable.",<EOL>    "errors": [<EOL>      {<EOL>        "message": "Service temporarily unavailable.",<EOL>        "domain": "global",<EOL>        "reason": "backendFailed"<EOL>      }<EOL>    ]<EOL>  }<EOL>}<EOL>"
-2026-10-08T12:31:40.186+03:00 DEBUG 16488 --- [nio-8080-exec-1] o.s.web.client.DefaultRestClient         : Reading to [java.util.Map<?, ?>]
-2026-10-08T12:31:40.716+03:00 DEBUG 16488 --- [nio-8080-exec-1] o.s.web.client.DefaultRestClient         : Reading to [java.util.Map<?, ?>]
-2026-10-08T12:31:41.263+03:00 DEBUG 16488 --- [nio-8080-exec-1] o.s.web.client.DefaultRestClient         : Reading to [java.util.Map<?, ?>]
-2026-10-08T12:31:41.278+03:00 DEBUG 16488 --- [nio-8080-exec-1] org.hibernate.SQL                        : update books set author=?,cover_url=?,date_added=?,description=?,genre=?,isbn=?,page_count=?,published_date=?,publisher=?,rating=?,status=?,title=? where id=?
-Hibernate: update books set author=?,cover_url=?,date_added=?,description=?,genre=?,isbn=?,page_count=?,published_date=?,publisher=?,rating=?,status=?,title=? where id=?
-Google Books lookup failed: 503 Service Unavailable: "{<EOL>  "error": {<EOL>    "code": 503,<EOL>    "message": "Service temporarily unavailable.",<EOL>    "errors": [<EOL>      {<EOL>        "message": "Service temporarily unavailable.",<EOL>        "domain": "global",<EOL>        "reason": "backendFailed"<EOL>      }<EOL>    ]<EOL>  }<EOL>}<EOL>"
-2026-10-08T12:31:43.315+03:00 DEBUG 16488 --- [nio-8080-exec-1] o.s.web.client.DefaultRestClient         : Reading to [java.util.Map<?, ?>]
-2026-10-08T12:31:43.961+03:00 DEBUG 16488 --- [nio-8080-exec-1] o.s.web.client.DefaultRestClient         : Reading to [java.util.Map<?, ?>]
-2026-10-08T12:31:44.524+03:00 DEBUG 16488 --- [nio-8080-exec-1] o.s.web.client.DefaultRestClient         : Reading to [java.util.Map<?, ?>]
-2026-10-08T12:31:44.537+03:00 DEBUG 16488 --- [nio-8080-exec-1] org.hibernate.SQL                        : update books set author=?,cover_url=?,date_added=?,description=?,genre=?,isbn=?,page_count=?,published_date=?,publisher=?,rating=?,status=?,title=? where id=?
-Hibernate: update books set author=?,cover_url=?,date_added=?,description=?,genre=?,isbn=?,page_count=?,published_date=?,publisher=?,rating=?,status=?,title=? where id=?
-Google Books lookup failed: 503 Service Unavailable: "{<EOL>  "error": {<EOL>    "code": 503,<EOL>    "message": "Service temporarily unavailable.",<EOL>    "errors": [<EOL>      {<EOL>        "message": "Service temporarily unavailable.",<EOL>        "domain": "global",<EOL>        "reason": "backendFailed"<EOL>      }<EOL>    ]<EOL>  }<EOL>}<EOL>"
-2026-10-08T12:31:46.119+03:00 DEBUG 16488 --- [nio-8080-exec-1] o.s.web.client.DefaultRestClient         : Reading to [java.util.Map<?, ?>]
-2026-10-08T12:31:46.666+03:00 DEBUG 16488 --- [nio-8080-exec-1] o.s.web.client.DefaultRestClient         : Reading to [java.util.Map<?, ?>]
-2026-10-08T12:31:47.214+03:00 DEBUG 16488 --- [nio-8080-exec-1] o.s.web.client.DefaultRestClient         : Reading to [java.util.Map<?, ?>]
-2026-10-08T12:31:47.228+03:00 DEBUG 16488 --- [nio-8080-exec-1] org.hibernate.SQL                        : update books set author=?,cover_url=?,date_added=?,description=?,genre=?,isbn=?,page_count=?,published_date=?,publisher=?,rating=?,status=?,title=? where id=?
-Hibernate: update books set author=?,cover_url=?,date_added=?,description=?,genre=?,isbn=?,page_count=?,published_date=?,publisher=?,rating=?,status=?,title=? where id=?
-2026-10-08T12:31:47.995+03:00 DEBUG 16488 --- [nio-8080-exec-1] o.s.web.client.DefaultRestClient         : Reading to [java.util.Map<?, ?>]
-2026-10-08T12:31:48.639+03:00 DEBUG 16488 --- [nio-8080-exec-1] o.s.web.client.DefaultRestClient         : Reading to [java.util.Map<?, ?>]
-2026-10-08T12:31:49.202+03:00 DEBUG 16488 --- [nio-8080-exec-1] o.s.web.client.DefaultRestClient         : Reading to [java.util.Map<?, ?>]
-2026-10-08T12:31:49.780+03:00 DEBUG 16488 --- [nio-8080-exec-1] o.s.web.client.DefaultRestClient         : Reading to [java.util.Map<?, ?>]
-2026-10-08T12:31:49.783+03:00 DEBUG 16488 --- [nio-8080-exec-1] org.hibernate.SQL                        : update books set author=?,cover_url=?,date_added=?,description=?,genre=?,isbn=?,page_count=?,published_date=?,publisher=?,rating=?,status=?,title=? where id=?
-Hibernate: update books set author=?,cover_url=?,date_added=?,description=?,genre=?,isbn=?,page_count=?,published_date=?,publisher=?,rating=?,status=?,title=? where id=?
-Google Books lookup failed: 503 Service Unavailable: "{<EOL>  "error": {<EOL>    "code": 503,<EOL>    "message": "Service temporarily unavailable.",<EOL>    "errors": [<EOL>      {<EOL>        "message": "Service temporarily unavailable.",<EOL>        "domain": "global",<EOL>        "reason": "backendFailed"<EOL>      }<EOL>    ]<EOL>  }<EOL>}<EOL>"
-2026-10-08T12:31:52.640+03:00 DEBUG 16488 --- [nio-8080-exec-1] o.s.web.client.DefaultRestClient         : Reading to [java.util.Map<?, ?>]
-2026-10-08T12:31:53.156+03:00 DEBUG 16488 --- [nio-8080-exec-1] o.s.web.client.DefaultRestClient         : Reading to [java.util.Map<?, ?>]
-2026-10-08T12:31:53.729+03:00 DEBUG 16488 --- [nio-8080-exec-1] o.s.web.client.DefaultRestClient         : Reading to [java.util.Map<?, ?>]
-2026-10-08T12:31:53.745+03:00 DEBUG 16488 --- [nio-8080-exec-1] org.hibernate.SQL                        : update books set author=?,cover_url=?,date_added=?,description=?,genre=?,isbn=?,page_count=?,published_date=?,publisher=?,rating=?,status=?,title=? where id=?
-Hibernate: update books set author=?,cover_url=?,date_added=?,description=?,genre=?,isbn=?,page_count=?,published_date=?,publisher=?,rating=?,status=?,title=? where id=?
-2026-10-08T12:31:53.757+03:00 DEBUG 16488 --- [nio-8080-exec-1] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
-2026-10-08T12:31:53.761+03:00 DEBUG 16488 --- [nio-8080-exec-1] m.m.a.RequestResponseBodyMethodProcessor : Writing [{attempted=7}]
-2026-10-08T12:31:53.792+03:00 DEBUG 16488 --- [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
-2026-10-08T12:31:53.922+03:00 DEBUG 16488 --- [nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : GET "/books", parameters={}
-2026-10-08T12:31:53.923+03:00 DEBUG 16488 --- [nio-8080-exec-2] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.bookcatalog.backend.BookController#getAllBooks()
-2026-10-08T12:31:53.925+03:00 DEBUG 16488 --- [nio-8080-exec-2] org.hibernate.SQL                        : select b1_0.id,b1_0.author,b1_0.cover_url,b1_0.date_added,b1_0.description,b1_0.genre,b1_0.isbn,b1_0.page_count,b1_0.published_date,b1_0.publisher,b1_0.rating,b1_0.status,b1_0.title from books b1_0
-Hibernate: select b1_0.id,b1_0.author,b1_0.cover_url,b1_0.date_added,b1_0.description,b1_0.genre,b1_0.isbn,b1_0.page_count,b1_0.published_date,b1_0.publisher,b1_0.rating,b1_0.status,b1_0.title from books b1_0
-2026-10-08T12:31:53.930+03:00 DEBUG 16488 --- [nio-8080-exec-2] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
-2026-10-08T12:31:53.930+03:00 DEBUG 16488 --- [nio-8080-exec-2] m.m.a.RequestResponseBodyMethodProcessor : Writing [[com.bookcatalog.backend.Book@5ad7250d, com.bookcatalog.backend.Book@560f3e81, com.bookcatalog.backe (truncated)...]
-2026-10-08T12:31:53.994+03:00 DEBUG 16488 --- [nio-8080-exec-2] org.hibernate.SQL                        : select t1_0.book_id,t1_0.tag from book_tags t1_0 where t1_0.book_id=?
+2026-10-12T15:02:44.765+03:00 DEBUG 16888 --- [nio-8080-exec-1] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2026-10-12T15:02:44.768+03:00 DEBUG 16888 --- [nio-8080-exec-1] m.m.a.RequestResponseBodyMethodProcessor : Writing [[com.bookcatalog.backend.Book@5e22c43d, com.bookcatalog.backend.Book@a9e9f7c, com.bookcatalog.backen (truncated)...]
+2026-10-12T15:02:44.902+03:00 DEBUG 16888 --- [nio-8080-exec-1] org.hibernate.SQL                        : select t1_0.book_id,t1_0.tag from book_tags t1_0 where t1_0.book_id=?
 Hibernate: select t1_0.book_id,t1_0.tag from book_tags t1_0 where t1_0.book_id=?
-2026-10-08T12:31:54.000+03:00 DEBUG 16488 --- [nio-8080-exec-2] org.hibernate.SQL                        : select t1_0.book_id,t1_0.tag from book_tags t1_0 where t1_0.book_id=?
+2026-10-12T15:02:44.908+03:00 DEBUG 16888 --- [nio-8080-exec-1] org.hibernate.SQL                        : select t1_0.book_id,t1_0.tag from book_tags t1_0 where t1_0.book_id=?
 Hibernate: select t1_0.book_id,t1_0.tag from book_tags t1_0 where t1_0.book_id=?
-2026-10-08T12:31:54.002+03:00 DEBUG 16488 --- [nio-8080-exec-2] org.hibernate.SQL                        : select t1_0.book_id,t1_0.tag from book_tags t1_0 where t1_0.book_id=?
+2026-10-12T15:02:44.914+03:00 DEBUG 16888 --- [nio-8080-exec-1] org.hibernate.SQL                        : select t1_0.book_id,t1_0.tag from book_tags t1_0 where t1_0.book_id=?
 Hibernate: select t1_0.book_id,t1_0.tag from book_tags t1_0 where t1_0.book_id=?
-2026-10-08T12:31:54.004+03:00 DEBUG 16488 --- [nio-8080-exec-2] org.hibernate.SQL                        : select t1_0.book_id,t1_0.tag from book_tags t1_0 where t1_0.book_id=?
+2026-10-12T15:02:44.918+03:00 DEBUG 16888 --- [nio-8080-exec-1] org.hibernate.SQL                        : select t1_0.book_id,t1_0.tag from book_tags t1_0 where t1_0.book_id=?
 Hibernate: select t1_0.book_id,t1_0.tag from book_tags t1_0 where t1_0.book_id=?
-2026-10-08T12:31:54.006+03:00 DEBUG 16488 --- [nio-8080-exec-2] org.hibernate.SQL                        : select t1_0.book_id,t1_0.tag from book_tags t1_0 where t1_0.book_id=?
+2026-10-12T15:02:44.921+03:00 DEBUG 16888 --- [nio-8080-exec-1] org.hibernate.SQL                        : select t1_0.book_id,t1_0.tag from book_tags t1_0 where t1_0.book_id=?
 Hibernate: select t1_0.book_id,t1_0.tag from book_tags t1_0 where t1_0.book_id=?
-2026-10-08T12:31:54.011+03:00 DEBUG 16488 --- [nio-8080-exec-2] org.hibernate.SQL                        : select t1_0.book_id,t1_0.tag from book_tags t1_0 where t1_0.book_id=?
+2026-10-12T15:02:44.923+03:00 DEBUG 16888 --- [nio-8080-exec-1] org.hibernate.SQL                        : select t1_0.book_id,t1_0.tag from book_tags t1_0 where t1_0.book_id=?
 Hibernate: select t1_0.book_id,t1_0.tag from book_tags t1_0 where t1_0.book_id=?
-2026-10-08T12:31:54.014+03:00 DEBUG 16488 --- [nio-8080-exec-2] org.hibernate.SQL                        : select t1_0.book_id,t1_0.tag from book_tags t1_0 where t1_0.book_id=?
+2026-10-12T15:02:44.926+03:00 DEBUG 16888 --- [nio-8080-exec-1] org.hibernate.SQL                        : select t1_0.book_id,t1_0.tag from book_tags t1_0 where t1_0.book_id=?
 Hibernate: select t1_0.book_id,t1_0.tag from book_tags t1_0 where t1_0.book_id=?
-2026-10-08T12:31:54.016+03:00 DEBUG 16488 --- [nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-10-12T15:02:44.936+03:00 DEBUG 16888 --- [nio-8080-exec-1] org.hibernate.SQL                        : select t1_0.book_id,t1_0.tag from book_tags t1_0 where t1_0.book_id=?
+Hibernate: select t1_0.book_id,t1_0.tag from book_tags t1_0 where t1_0.book_id=?
+2026-10-12T15:02:44.942+03:00 DEBUG 16888 --- [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-10-12T15:02:58.102+03:00 DEBUG 16888 --- [nio-8080-exec-3] o.s.web.servlet.DispatcherServlet        : GET "/books/lookup?isbn=bad", parameters={masked}
+2026-10-12T15:02:58.103+03:00 DEBUG 16888 --- [nio-8080-exec-3] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.bookcatalog.backend.BookController#lookup(String)
+2026-10-12T15:02:58.126+03:00 DEBUG 16888 --- [nio-8080-exec-3] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2026-10-12T15:02:58.126+03:00 DEBUG 16888 --- [nio-8080-exec-3] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Nothing to write: null body
+2026-10-12T15:02:58.127+03:00 DEBUG 16888 --- [nio-8080-exec-3] o.s.web.servlet.DispatcherServlet        : Completed 400 BAD_REQUEST
 [INFO] ------------------------------------------------------------------------
 [INFO] BUILD FAILURE
 [INFO] ------------------------------------------------------------------------
-[INFO] Total time:  22:50 min
-[INFO] Finished at: 2026-10-08T12:53:34+03:00
+[INFO] Total time:  03:21 min
+[INFO] Finished at: 2026-10-12T15:05:29+03:00
 [INFO] ------------------------------------------------------------------------
 [ERROR] Failed to execute goal org.springframework.boot:spring-boot-maven-plugin:4.1.0:run (default-cli) on project backend: Process terminated with exit code: 1 -> [Help 1]
 [ERROR] 

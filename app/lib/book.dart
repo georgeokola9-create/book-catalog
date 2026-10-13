@@ -31,6 +31,26 @@ class Book {
 
   bool get isOwned => id != null;
 
+  /// Keeps this book's identity and fills any missing details from [other].
+  Book withDetailsFrom(Book other) {
+    bool blank(String? s) => s == null || s.trim().isEmpty;
+    return Book(
+      id: id,
+      isbn: isbn,
+      title: title,
+      author: author,
+      genre: blank(genre) ? other.genre : genre,
+      description: blank(description) ? other.description : description,
+      coverUrl: blank(coverUrl) ? other.coverUrl : coverUrl,
+      publisher: blank(publisher) ? other.publisher : publisher,
+      publishedDate: blank(publishedDate) ? other.publishedDate : publishedDate,
+      pageCount: pageCount ?? other.pageCount,
+      rating: rating,
+      status: status,
+      tags: tags.isEmpty ? other.tags : tags,
+    );
+  }
+
   String? get statusLabel {
     switch (status) {
       case 'TO_READ':
