@@ -48,6 +48,11 @@ public class Book {
     @Column(length = 500)
     private String coverUrl;
 
+    @Column(length = 600)
+    private String previewUrl;
+
+    private String previewType;
+
     private String publisher;
 
     private String publishedDate;
@@ -129,6 +134,22 @@ public class Book {
 
     public void setCoverUrl(String coverUrl) {
         this.coverUrl = coverUrl;
+    }
+
+    public String getPreviewUrl() {
+        return previewUrl;
+    }
+
+    public void setPreviewUrl(String previewUrl) {
+        this.previewUrl = previewUrl;
+    }
+
+    public String getPreviewType() {
+        return previewType;
+    }
+
+    public void setPreviewType(String previewType) {
+        this.previewType = previewType;
     }
 
     public String getPublisher() {

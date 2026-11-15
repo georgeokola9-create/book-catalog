@@ -9,6 +9,8 @@ class Book {
   final String? publisher;
   final String? publishedDate;
   final int? pageCount;
+  final String? previewUrl;
+  final String? previewType;
   final int? rating;
   final String? status;
   final List<String> tags;
@@ -24,12 +26,17 @@ class Book {
     this.publisher,
     this.publishedDate,
     this.pageCount,
+    this.previewUrl,
+    this.previewType,
     this.rating,
     this.status,
     this.tags = const [],
   });
 
   bool get isOwned => id != null;
+
+  bool get hasPreview =>
+      previewUrl != null && previewUrl!.startsWith('https://');
 
   /// Keeps this book's identity and fills any missing details from [other].
   Book withDetailsFrom(Book other) {
@@ -45,6 +52,8 @@ class Book {
       publisher: blank(publisher) ? other.publisher : publisher,
       publishedDate: blank(publishedDate) ? other.publishedDate : publishedDate,
       pageCount: pageCount ?? other.pageCount,
+      previewUrl: blank(previewUrl) ? other.previewUrl : previewUrl,
+      previewType: blank(previewUrl) ? other.previewType : previewType,
       rating: rating,
       status: status,
       tags: tags.isEmpty ? other.tags : tags,
@@ -79,6 +88,8 @@ class Book {
       publisher: json['publisher'] as String?,
       publishedDate: json['publishedDate'] as String?,
       pageCount: (json['pageCount'] as num?)?.toInt(),
+      previewUrl: json['previewUrl'] as String?,
+      previewType: json['previewType'] as String?,
       rating: (json['rating'] as num?)?.toInt(),
       status: json['status'] as String?,
       tags:
