@@ -1,9 +1,12 @@
 package com.bookcatalog.backend;
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -21,8 +24,73 @@ public class GoogleBooksService {
     @Value("${google.books.api.key:}")
     private String googleBooksApiKey;
 
+    private static final Set<String> PREVIEW_HOSTS = Set.of(
+            "books.google.com", "play.google.com", "archive.org", "openlibrary.org");
+
     private static String openLibraryCover(String isbn) {
         return "https://covers.openlibrary.org/b/isbn/" + isbn + "-M.jpg?default=false";
+    }
+
+    /** Returns an https link on a trusted host, or null. */
+    private static String safePreviewUrl(String raw) {
+        if (raw == null || raw.isBlank()) return null;
+        try {
+            URI uri = URI.create(raw.trim().replaceFirst("^http://", "https://"));
+            String host = uri.getHost();
+            if (!"https".equals(uri.getScheme()) || host == null) return null;
+            host = host.toLowerCase(Locale.ROOT);
+            for (String allowed : PREVIEW_HOSTS) {
+                if (host.equals(allowed) || host.endsWith("." + allowed)) return uri.toString();
+            }
+        } catch (Exception ignored) {
+            // malformed link, treat as no preview
+        }
+        return null;
+    }
+
+    @SuppressWarnings("unchecked")
+    private static void applyGooglePreview(Book book, Map<String, Object> item) {
+        Map<String, Object> access = (Map<String, Object>) item.get("accessInfo");
+        Map<String, Object> info = (Map<String, Object>) item.get("volumeInfo");
+        if (access == null || info == null) return;
+
+        String type = switch (String.valueOf(access.get("viewability"))) {
+            case "PARTIAL" -> "SAMPLE";
+            case "ALL_PAGES" -> "FULL";
+            default -> null;
+        };
+        String url = safePreviewUrl((String) info.get("previewLink"));
+        if (type != null && url != null) {
+            book.setPreviewType(type);
+            book.setPreviewUrl(url);
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    private void applyOpenLibraryPreview(Book book, String isbn) {
+        try {
+            Map<String, Object> response = openLibraryClient.get()
+                    .uri("/api/books?bibkeys=ISBN:{isbn}&format=json&jscmd=viewapi", isbn)
+                    .retrieve()
+                    .body(Map.class);
+            if (response == null) return;
+
+            Map<String, Object> entry = (Map<String, Object>) response.get("ISBN:" + isbn);
+            if (entry == null) return;
+
+            String type = switch (String.valueOf(entry.get("preview"))) {
+                case "full" -> "FULL";
+                case "borrow" -> "BORROW";
+                default -> null;
+            };
+            String url = safePreviewUrl((String) entry.get("preview_url"));
+            if (type != null && url != null) {
+                book.setPreviewType(type);
+                book.setPreviewUrl(url);
+            }
+        } catch (Exception ignored) {
+            // preview is optional, never fail a lookup because of it
+        }
     }
 
     private static String cleanText(String raw) {
@@ -148,6 +216,9 @@ public class GoogleBooksService {
             Object pages = volumeInfo.get("pageCount");
             if (pages instanceof Number n && n.intValue() > 0) book.setPageCount(n.intValue());
 
+            applyGooglePreview(book, items.get(0));
+            if (book.getPreviewUrl() == null) applyOpenLibraryPreview(book, isbn);
+
             return book;
         } catch (Exception e) {
             System.out.println("Google Books lookup failed: " + e.getMessage());
@@ -213,6 +284,8 @@ public class GoogleBooksService {
 
             book.setDescription(fetchOpenLibraryDescription((String) data.get("key")));
 
+            applyOpenLibraryPreview(book, isbn);
+
             return book;
         } catch (Exception e) {
             System.out.println("Open Library lookup failed: " + e.getMessage());
@@ -269,6 +342,7 @@ public class GoogleBooksService {
                 book.setDescription(cleanText((String) volumeInfo.get("description")));
                 book.setPublisher((String) volumeInfo.get("publisher"));
                 book.setPublishedDate((String) volumeInfo.get("publishedDate"));
+                applyGooglePreview(book, item);
 
                 results.add(book);
             }

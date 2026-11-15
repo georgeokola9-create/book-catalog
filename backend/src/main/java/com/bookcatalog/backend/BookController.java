@@ -92,7 +92,7 @@ public class BookController {
     public Map<String, Integer> refreshAll() {
         int attempted = 0;
         for (Book b : bookRepository.findAll()) {
-            if (isBlank(b.getDescription()) || isBlank(b.getCoverUrl())) {
+            if (isBlank(b.getDescription()) || isBlank(b.getCoverUrl()) || isBlank(b.getPreviewUrl())) {
                 fillMissingDetails(b);
                 attempted++;
             }
@@ -142,6 +142,10 @@ public class BookController {
         if (fresh == null) return existing;
         if (isBlank(existing.getDescription())) existing.setDescription(fresh.getDescription());
         if (isBlank(existing.getCoverUrl())) existing.setCoverUrl(fresh.getCoverUrl());
+        if (isBlank(existing.getPreviewUrl())) {
+            existing.setPreviewUrl(fresh.getPreviewUrl());
+            existing.setPreviewType(fresh.getPreviewType());
+        }
         if (isBlank(existing.getPublisher())) existing.setPublisher(fresh.getPublisher());
         if (isBlank(existing.getPublishedDate())) existing.setPublishedDate(fresh.getPublishedDate());
         if (existing.getPageCount() == null) existing.setPageCount(fresh.getPageCount());

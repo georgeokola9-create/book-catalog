@@ -269,7 +269,7 @@ public class RecommendationService {
 
     private void enrichDetails(List<Book> books) {
         List<Book> missing = books.stream()
-                .filter(b -> isBlank(b.getDescription()))
+                .filter(b -> isBlank(b.getDescription()) || isBlank(b.getPreviewUrl()))
                 .toList();
         if (missing.isEmpty()) return;
 
@@ -293,6 +293,10 @@ public class RecommendationService {
     private static void fillMissing(Book target, Book source) {
         if (isBlank(target.getDescription())) target.setDescription(source.getDescription());
         if (isBlank(target.getCoverUrl())) target.setCoverUrl(source.getCoverUrl());
+        if (isBlank(target.getPreviewUrl())) {
+            target.setPreviewUrl(source.getPreviewUrl());
+            target.setPreviewType(source.getPreviewType());
+        }
         if (isBlank(target.getPublisher())) target.setPublisher(source.getPublisher());
         if (isBlank(target.getPublishedDate())) target.setPublishedDate(source.getPublishedDate());
         if (target.getPageCount() == null) target.setPageCount(source.getPageCount());

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'api_service.dart';
 import 'book.dart';
@@ -22,6 +23,16 @@ class _BookDetailScreenState extends State<BookDetailScreen> {
   bool get _busy => _saving != null || _deleting || _loadingDetails || _adding;
   bool get _hasSynopsis =>
       _book.description != null && _book.description!.trim().isNotEmpty;
+  String get _previewLabel => switch (_book.previewType) {
+        'FULL' => 'Read free online',
+        'BORROW' => 'Borrow to read',
+        _ => 'Read a sample',
+      };
+  String get _previewNote => switch (_book.previewType) {
+        'FULL' => 'Opens the full book in a new tab.',
+        'BORROW' => 'Opens Open Library. A free account is needed to borrow.',
+        _ => 'Opens a free preview on Google Books.',
+      };
 
   @override
   void initState() {
@@ -37,6 +48,23 @@ class _BookDetailScreenState extends State<BookDetailScreen> {
   void _showMessage(String text) {
     if (!mounted) return;
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(text)));
+  }
+
+  Future<void> _openPreview() async {
+    final uri = Uri.tryParse(_book.previewUrl ?? '');
+    if (uri == null || uri.scheme != 'https') {
+      _showMessage('This preview link is not available.');
+      return;
+    }
+    try {
+      final opened = await launchUrl(
+        uri,
+        mode: LaunchMode.externalApplication,
+      );
+      if (!opened) _showMessage('Could not open the preview.');
+    } catch (_) {
+      _showMessage('Could not open the preview.');
+    }
   }
 
   Future<void> _loadDetails({bool announce = true}) async {
@@ -197,6 +225,25 @@ class _BookDetailScreenState extends State<BookDetailScreen> {
                   ),
                 ),
                 const SizedBox(height: 14),
+                if (_book.hasPreview) ...[
+                  FilledButton.tonalIcon(
+                    onPressed: _openPreview,
+                    icon: const Icon(Icons.menu_book_outlined),
+                    label: Text(_previewLabel),
+                    style: FilledButton.styleFrom(
+                      minimumSize: const Size.fromHeight(48),
+                    ),
+                  ),
+                  const SizedBox(height: 6),
+                  Text(
+                    _previewNote,
+                    textAlign: TextAlign.center,
+                    style: theme.textTheme.bodySmall?.copyWith(
+                      color: theme.colorScheme.onSurfaceVariant,
+                    ),
+                  ),
+                  const SizedBox(height: 14),
+                ],
                 AppCard(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
